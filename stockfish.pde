@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 class Stockfish {
   Process stockfish;
-  String currGame;
+  String currGame = "";
 
   Stockfish() {
     
@@ -61,7 +61,7 @@ class Stockfish {
   
   String getNextMove(){
     String engineMove = "";
-    send("position startpos");
+    send("position startpos " + currGame);
     send("go movetime 100");
     
     //we need enough time for the
@@ -74,5 +74,12 @@ class Stockfish {
     engineMove = output.split("bestmove ")[1].split(" ")[0]; //<>//
     
     return engineMove;
+  }
+  
+  void setNextMove(String move){
+    if (currGame.equals("")){
+      currGame = "moves ";
+    }
+    currGame += move + " ";
   }
 }
