@@ -20,7 +20,7 @@ BufferedReader reader = new BufferedReader(new InputStreamReader(stockfish.getIn
 println(readAllLines(reader));
 */
 
-import java.io.*;
+
 
 
 
@@ -29,14 +29,9 @@ Stockfish engine;
 void setup(){
   engine = new Stockfish();
   
-  engine.send("d");
-  println(engine.readAllLines());
+  String move = engine.getNextMove();
   
-  engine.send("go movetime 1000");
-  //give it time to finish
-  delay(1500);
-  
-  println(engine.readAllLines());
+  println(move);
   
    //<>//
 }

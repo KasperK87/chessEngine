@@ -1,7 +1,13 @@
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class Stockfish {
   Process stockfish;
+  String currGame;
 
   Stockfish() {
+    
     try {
       ProcessBuilder processBuilder = new ProcessBuilder(sketchPath("stockfish/stockfish-windows-x86-64-sse41-popcnt.exe"));
       stockfish = processBuilder.start();
@@ -49,8 +55,23 @@ class Stockfish {
     return content.toString();
   }
   
+  void newGame(){
+    currGame = "";
+  }
+  
   String getNextMove(){
     String engineMove = "";
+    send("position startpos");
+    send("go movetime 100");
+    
+    //we need enough time for the
+    //evaluation to finish
+    delay(500);
+    
+    String output = readAllLines();
+    
+    //we split the output, and returns the bestmove
+    engineMove = output.split("bestmove ")[1].split(" ")[0]; //<>//
     
     return engineMove;
   }
